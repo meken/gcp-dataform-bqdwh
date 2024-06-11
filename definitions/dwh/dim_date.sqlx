@@ -3,7 +3,7 @@ config {
     tags: ["dimension"]
 }
 SELECT
-  FORMAT_DATE('%F', d) as id,
+  FORMAT_DATE('%F', d) as date_key,
   d AS full_date,
   EXTRACT(YEAR FROM d) AS year,
   EXTRACT(MONTH FROM d) AS month,

@@ -8,6 +8,6 @@ SELECT
     CreditCardID,
     ShipToAddressID,
     Status,
-    OrderDate
+    CAST(DATE(OrderDate) AS STRING) AS OrderDate
 FROM
     landing.salesorderheader
