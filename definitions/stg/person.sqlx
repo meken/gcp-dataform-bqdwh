@@ -1,0 +1,10 @@
+config {
+  type: "table",
+  name: "stg_person"
+}
+SELECT 
+    BusinessEntityID,
+    CONCAT(COALESCE(FirstName, ""), " ", COALESCE(MiddleName, ""), " ", COALESCE(LastName, "")) AS fullname
+FROM
+    landing.person
+

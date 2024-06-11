@@ -1,0 +1,8 @@
+config {
+  type: "table",
+  name: "stg_orderstatus"
+}
+SELECT 
+    DISTINCT Status
+FROM
+    landing.salesorderheader

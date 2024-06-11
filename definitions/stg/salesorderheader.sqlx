@@ -1,0 +1,13 @@
+config {
+  type: "table",
+  name: "stg_salesorderheader"
+}
+SELECT 
+    SalesOrderID,
+    CustomerID,
+    CreditCardID,
+    ShipToAddressID,
+    Status,
+    OrderDate
+FROM
+    landing.salesorderheader

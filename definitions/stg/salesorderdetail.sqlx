@@ -1,0 +1,11 @@
+config {
+  type: "table",
+  name: "stg_salesorderdetail"
+}
+SELECT
+        SalesOrderID,
+        SalesOrderDetailID,
+        ProductId,
+        OrderQty,
+        UnitPrice
+FROM landing.salesorderdetail

@@ -1,0 +1,12 @@
+config {
+  type: "table",
+  name: "stg_creditcard"
+}
+SELECT 
+    CreditCardID,
+    CardType,
+    CardNumber,
+    ExpMonth,
+    ExpYear
+FROM
+    landing.creditcard

@@ -1,0 +1,31 @@
+config {
+  type: "table",
+  name: "stg_product"
+}
+
+SELECT 
+    ProductID,
+    Name,
+    ProductNumber,
+    MakeFlag,
+    FinishedGoodsFlag,
+    Color,
+    SafetyStockLevel,
+    ReorderPoint,
+    StandardCost,
+    ListPrice,
+    Size,
+    SizeUnitMeasureCode,
+    WeightUnitMeasureCode,
+    Weight,
+    DaysToManufacture,
+    ProductLine,
+    Class,
+    Style,
+    ProductSubcategoryID,
+    ProductModelID,
+    SellStartDate,
+    SellEndDate,
+    DiscontinuedDate
+FROM 
+    landing.product

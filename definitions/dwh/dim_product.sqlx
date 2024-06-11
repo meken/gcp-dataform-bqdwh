@@ -1,0 +1,16 @@
+config {
+    type: "table",
+    tags: ["dimension"]
+}
+select
+    SHA256(CAST(${ref("stg_product")}.ProductID AS STRING))  as product_key,
+    ${ref("stg_product")}.productid,
+    ${ref("stg_product")}.name as product_name,
+    ${ref("stg_product")}.productnumber as product_number,
+    ${ref("stg_product")}.color,
+    ${ref("stg_product")}.class,
+    ${ref("stg_productsubcategory")}.name as product_subcategory_name,
+    ${ref("stg_productcategory")}.name as product_category_name
+from ${ref("stg_product")}
+left join ${ref("stg_productsubcategory")} on ${ref("stg_product")}.productsubcategoryid = ${ref("stg_productsubcategory")}.productsubcategoryid
+left join ${ref("stg_productcategory")} on ${ref("stg_productsubcategory")}.productcategoryid = ${ref("stg_productcategory")}.productcategoryid

@@ -1,0 +1,10 @@
+config {
+  type: "table",
+  name: "stg_customer"
+}
+SELECT 
+    CustomerID,
+    PersonID,
+    StoreID
+FROM
+    landing.customer

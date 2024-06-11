@@ -1,0 +1,10 @@
+config {
+  type: "table",
+  name: "stg_productsubcategory"
+}
+SELECT
+    ProductSubcategoryID,
+    ProductCategoryID,
+    Name
+FROM
+    landing.productsubcategory

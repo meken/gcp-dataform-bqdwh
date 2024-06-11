@@ -1,0 +1,10 @@
+config {
+    type: "table",
+    tags: ["dimension"]
+}
+
+select
+    SHA256(CAST(CreditCardID AS STRING)) as creditcard_key,
+    CreditCardID,
+    CardType
+from ${ref("stg_creditcard")}
