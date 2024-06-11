@@ -1,0 +1,9 @@
+config {
+  type: "table",
+  name: "stg_countryregion"
+}
+SELECT 
+    CountryRegionCode,
+    Name
+FROM
+    landing.countryregion

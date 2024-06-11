@@ -1,0 +1,14 @@
+config {
+  type: "table",
+  name: "stg_address"
+}
+SELECT 
+    AddressID,
+    AddressLine1,
+    AddressLine2,
+    City,
+    StateProvinceID,
+    PostalCode,
+    SpatialLocation
+FROM
+    landing.address

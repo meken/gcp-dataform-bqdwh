@@ -1,0 +1,14 @@
+config {
+    type: "table",
+    tags: ["dimension"]
+}
+
+select
+    SHA256(CAST(${ref("stg_address")}.addressid AS STRING)) as address_key,
+    ${ref("stg_address")}.addressid,
+    ${ref("stg_address")}.city as city,
+    ${ref("stg_stateprovince")}.name as state,
+    ${ref("stg_countryregion")}.name as country
+from ${ref("stg_address")}
+left join ${ref("stg_stateprovince")} on ${ref("stg_address")}.stateprovinceid = ${ref("stg_stateprovince")}.stateprovinceid
+left join ${ref("stg_countryregion")} on ${ref("stg_stateprovince")}.countryregioncode = ${ref("stg_countryregion")}.countryregioncode

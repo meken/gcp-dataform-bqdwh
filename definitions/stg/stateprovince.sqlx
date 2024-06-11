@@ -1,0 +1,13 @@
+config {
+  type: "table",
+  name: "stg_stateprovince"
+}
+SELECT 
+    StateProvinceID,
+    StateProvinceCode,
+    CountryRegionCode,
+    IsOnlyStateProvinceFlag,
+    Name,
+    TerritoryID
+FROM
+    landing.stateprovince

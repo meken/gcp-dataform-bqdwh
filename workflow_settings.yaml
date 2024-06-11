@@ -1,0 +1,5 @@
+defaultProject: meken-playground
+defaultLocation: us-central1
+defaultDataset: awdwh
+defaultAssertionDataset: dataform_assertions
+dataformCoreVersion: 3.0.0-beta.4
