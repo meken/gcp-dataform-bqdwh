@@ -4,12 +4,12 @@ config {
 }
 
 select
-    SHA256(CAST(${ref("stg_customer")}.CustomerID AS STRING)) as customer_key,
+    ${keys.surrogate("CustomerID")} as customer_key,
     ${ref("stg_customer")}.CustomerID,
     ${ref("stg_person")}.BusinessEntityID as person_business_entity_id,
-    ${ref("stg_person")}.fullname,
+    ${ref("stg_person")}.FullName as full_name,
     ${ref("stg_store")}.BusinessEntityID as store_business_entity_id,
-    ${ref("stg_store")}.name as store_name
+    ${ref("stg_store")}.Name as store_name
 from ${ref("stg_customer")}
 left join ${ref("stg_person")} on ${ref("stg_customer")}.personid = ${ref("stg_person")}.businessentityid
 left join ${ref("stg_store")} on ${ref("stg_customer")}.storeid = ${ref("stg_store")}.businessentityid
