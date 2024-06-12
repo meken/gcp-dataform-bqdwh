@@ -1,16 +1,10 @@
-function tostr(colummn) {
+function cast_to_str(colummn) {
     return `CAST(${colummn} AS STRING)`;
 }
 
-function surrogate(columns) {
-    let keys = ""
-    if (Array.isArray(columns)) {
-        let combined = columns.map((c) => tostr(c)).join(",'-',");
-        keys = `CONCAT(${combined})`;
-    } else {
-        keys = tostr(columns);
-    }
-    return `FARM_FINGERPRINT(${keys})`;
+function surrogate(...columns) {
+    let combined = columns.map((c) => cast_to_str(c)).join(",'-',");
+    return `FARM_FINGERPRINT(CONCAT(${combined}))`;
 }
 
 module.exports = {

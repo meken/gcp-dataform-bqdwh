@@ -4,7 +4,7 @@ config {
 }
 
 SELECT
-  ${keys.surrogate(["sod.SalesOrderID", "sod.SalesOrderDetailID"])} AS sales_key,
+  ${keys.surrogate("sod.SalesOrderID", "sod.SalesOrderDetailID")} AS sales_key,
   ${keys.surrogate("ProductID")} AS product_key,
   ${keys.surrogate("CustomerID")} AS customer_key,
   ${keys.surrogate("CreditCardID")} AS creditcard_key,
