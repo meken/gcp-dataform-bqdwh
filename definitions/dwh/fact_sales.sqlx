@@ -9,7 +9,7 @@ select
     SHA256(CAST(CreditCardID AS STRING)) as creditcard_key,
     SHA256(CAST(ShipToAddressID AS STRING)) as ship_address_key,
     SHA256(CAST(Status AS STRING)) as order_status_key,
-    SHA256(CAST(OrderDate AS STRING)) as order_date_key,
+    CAST(OrderDate AS STRING) as order_date_key,
     ${ref("stg_salesorderdetail")}.salesorderid,
     salesorderdetailid,
     unitprice,
