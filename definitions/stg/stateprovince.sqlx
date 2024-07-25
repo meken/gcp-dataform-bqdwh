@@ -10,4 +10,4 @@ SELECT
     Name,
     TerritoryID
 FROM
-    landing.stateprovince
+    ${ref("stateprovince")}

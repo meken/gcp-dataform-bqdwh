@@ -28,4 +28,4 @@ SELECT
     SellEndDate,
     DiscontinuedDate
 FROM 
-    landing.product
+    ${ref("product")}

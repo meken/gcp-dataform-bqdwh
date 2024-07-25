@@ -3,9 +3,10 @@ config {
   name: "stg_salesorderdetail"
 }
 SELECT
-        SalesOrderID,
-        SalesOrderDetailID,
-        ProductId,
-        OrderQty,
-        UnitPrice
-FROM landing.salesorderdetail
+    SalesOrderID,
+    SalesOrderDetailID,
+    ProductId,
+    OrderQty,
+    UnitPrice
+FROM 
+    ${ref("salesorderdetail")}

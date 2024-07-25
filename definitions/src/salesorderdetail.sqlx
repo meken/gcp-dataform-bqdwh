@@ -1,0 +1,10 @@
+config {
+  type: "operations",
+  hasOutput: true
+}
+CREATE OR REPLACE EXTERNAL TABLE ${self()}
+  WITH CONNECTION `${dataform.projectConfig.vars.bigLakeConnection}`
+  OPTIONS (
+    format = "CSV",
+    uris = ['gs://${dataform.projectConfig.defaultDatabase}-landing/SalesOrderDetail/*.csv']
+  );

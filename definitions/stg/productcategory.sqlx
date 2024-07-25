@@ -6,4 +6,4 @@ SELECT
     ProductCategoryID,
     Name
 FROM
-    landing.productcategory
+    ${ref("productcategory")}
