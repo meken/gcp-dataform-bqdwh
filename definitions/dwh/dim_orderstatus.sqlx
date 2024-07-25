@@ -4,7 +4,7 @@ config {
 }
 
 SELECT
-    SHA256(CAST(Status AS STRING)) AS order_status_key,
+    ${keys.surrogate("Status")} AS order_status_key,
     Status AS order_status,
     case
         when Status = 1 then 'in_process'

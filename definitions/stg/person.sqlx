@@ -4,7 +4,7 @@ config {
 }
 SELECT 
     BusinessEntityID,
-    CONCAT(COALESCE(FirstName, ""), " ", COALESCE(MiddleName, ""), " ", COALESCE(LastName, "")) AS fullname
+    CONCAT(COALESCE(FirstName, ""), " ", COALESCE(MiddleName, ""), " ", COALESCE(LastName, "")) AS FullName
 FROM
     landing.person
 

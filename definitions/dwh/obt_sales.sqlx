@@ -9,7 +9,7 @@ SELECT
   cc.* EXCEPT(creditcard_key),
   o.* EXCEPT(order_status_key),
   c.* EXCEPT(customer_key),
-  f.* EXCEPT(sales_key, customer_key, order_status_key, creditcard_key, ship_address_key, product_key)
+  f.* EXCEPT(sales_key, customer_key, order_date_key, order_status_key, creditcard_key, ship_address_key, product_key)
 FROM
   ${ref("fact_sales")} f,
   ${ref("dim_address")} a,

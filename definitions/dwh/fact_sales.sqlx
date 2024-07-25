@@ -2,18 +2,22 @@ config {
     type: "table",
     tags: ["fact"]
 }
-select
-    SHA256(CONCAT(CAST(${ref("stg_salesorderdetail")}.SalesOrderID AS STRING), '-', CAST(SalesOrderDetailID AS STRING))) as sales_key,
-    SHA256(CAST(ProductID AS STRING)) as product_key,
-    SHA256(CAST(CustomerID AS STRING)) as customer_key,
-    SHA256(CAST(CreditCardID AS STRING)) as creditcard_key,
-    SHA256(CAST(ShipToAddressID AS STRING)) as ship_address_key,
-    SHA256(CAST(Status AS STRING)) as order_status_key,
-    CAST(OrderDate AS STRING) as order_date_key,
-    ${ref("stg_salesorderdetail")}.salesorderid,
-    salesorderdetailid,
-    unitprice,
-    orderqty,
-    orderqty * unitprice as revenue
-from ${ref("stg_salesorderdetail")}
-inner join ${ref("stg_salesorderheader")} on ${ref("stg_salesorderdetail")}.salesorderid = ${ref("stg_salesorderheader")}.salesorderid
+
+SELECT
+  ${keys.surrogate("sod.SalesOrderID", "sod.SalesOrderDetailID")} AS sales_key,
+  ${keys.surrogate("ProductID")} AS product_key,
+  ${keys.surrogate("CustomerID")} AS customer_key,
+  ${keys.surrogate("CreditCardID")} AS creditcard_key,
+  ${keys.surrogate("ShipToAddressID")} AS ship_address_key,
+  ${keys.surrogate("Status")} AS order_status_key,
+  ${keys.surrogate("OrderDate")} AS order_date_key,
+  sod.salesorderid,
+  sod.salesorderdetailid,
+  sod.unitprice,
+  sod.orderqty,
+  orderqty * unitprice AS revenue
+FROM
+  ${ref("stg_salesorderdetail")} sod,
+  ${ref("stg_salesorderheader")} soh
+WHERE
+  sod.salesorderid = soh.salesorderid
