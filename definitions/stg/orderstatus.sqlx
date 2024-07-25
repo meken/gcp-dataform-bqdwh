@@ -5,4 +5,4 @@ config {
 SELECT 
     DISTINCT Status
 FROM
-    ${ref("orderstatus")}
+    ${ref("salesorderheader")}
