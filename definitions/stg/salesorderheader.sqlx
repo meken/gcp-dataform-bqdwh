@@ -10,4 +10,4 @@ SELECT
     Status,
     CAST(DATE(OrderDate) AS STRING) AS OrderDate
 FROM
-    landing.salesorderheader
+    ${ref("salesorderheader")}

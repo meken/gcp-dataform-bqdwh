@@ -7,4 +7,4 @@ SELECT
     PersonID,
     StoreID
 FROM
-    landing.customer
+    ${ref("customer")}

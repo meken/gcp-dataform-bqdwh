@@ -6,4 +6,4 @@ SELECT
     CountryRegionCode,
     Name
 FROM
-    landing.countryregion
+    ${ref("countryregion")}

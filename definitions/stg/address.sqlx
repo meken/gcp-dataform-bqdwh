@@ -11,4 +11,4 @@ SELECT
     PostalCode,
     SpatialLocation
 FROM
-    landing.address
+    ${ref("address")}

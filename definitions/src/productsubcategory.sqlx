@@ -1,0 +1,9 @@
+config {
+  type: "operation"
+}
+CREATE OR REPLACE EXTERNAL TABLE `${dataform.projectConfig.vars.landingDataset}.${self()}`
+  WITH CONNECTION `${dataform.projectConfig.vars.bigLakeConnection}`
+  OPTIONS (
+    format = "CSV",
+    uris = ['gs://${dataform.projectConfig.vars.landingBucket}/ProductSubcategory/*.csv']
+  );

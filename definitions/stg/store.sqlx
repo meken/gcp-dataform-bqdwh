@@ -6,4 +6,4 @@ SELECT
     BusinessEntityID,
     Name
 FROM
-    landing.store
+    ${ref("store")}
