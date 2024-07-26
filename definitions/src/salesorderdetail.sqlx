@@ -1,5 +1,6 @@
 config {
   type: "operations",
+  schema: "raw",
   hasOutput: true
 }
 CREATE OR REPLACE EXTERNAL TABLE ${self()}
