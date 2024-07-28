@@ -5,6 +5,9 @@ config {
   tags: ["staging"]
 }
 SELECT 
-    DISTINCT * 
+    DISTINCT * EXCEPT(comment, order_date, ship_date, due_date), 
+    DATE(order_date) AS order_date, 
+    DATE(ship_date) AS ship_date,
+    DATE(due_date) AS due_date
 FROM
     ${ref("sales_order_header")}

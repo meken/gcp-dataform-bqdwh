@@ -6,7 +6,7 @@ config {
 
 SELECT
   ${keys.surrogate("sod.sales_order_id", "sod.sales_order_detail_id")} AS sales_key,
-  ${keys.surrogate("product_id")} AS product_key,
+  ${keys.surrogate("sod.product_id")} AS product_key,
   ${keys.surrogate("customer_id")} AS customer_key,
   ${keys.surrogate("credit_card_id")} AS credit_card_key,
   ${keys.surrogate("ship_to_address_id")} AS ship_address_key,
@@ -15,10 +15,15 @@ SELECT
   sod.sales_order_id,
   sod.sales_order_detail_id,
   sod.unit_price,
-  sod.order_qty,
-  order_qty * unit_price AS revenue
+  sod.unit_price_discount,
+  p.standard_cost as cost_of_goods_sold,
+  sod.order_qty as order_quantity,
+  sod.order_qty * sod.unit_price AS gross_revenue,
+  (sod.order_qty * sod.unit_price * (1 - sod.unit_price_discount)) - (p.standard_cost) as gross_profit
+
 FROM
   ${ref("stg_sales_order_detail")} sod,
-  ${ref("stg_sales_order_header")} soh
+  ${ref("stg_sales_order_header")} soh,
+  ${ref("stg_product")} p
 WHERE
-  sod.sales_order_id = soh.sales_order_id
+  sod.sales_order_id = soh.sales_order_id AND sod.product_id = p.product_id
