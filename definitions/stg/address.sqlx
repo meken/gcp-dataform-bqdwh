@@ -1,15 +1,10 @@
 config {
   type: "table",
   schema: "curated",
-  name: "stg_address"
+  name: "stg_address",
+  tags: ["staging"]
 }
 SELECT 
-    AddressID,
-    AddressLine1,
-    AddressLine2,
-    City,
-    StateProvinceID,
-    PostalCode,
-    SpatialLocation
+  DISTINCT *
 FROM
     ${ref("address")}

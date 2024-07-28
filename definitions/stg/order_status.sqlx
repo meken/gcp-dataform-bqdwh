@@ -1,9 +1,10 @@
 config {
   type: "table",
   schema: "curated",
-  name: "stg_orderstatus"
+  name: "stg_order_status",
+  tags: ["staging"]
 }
 SELECT 
     DISTINCT Status
 FROM
-    ${ref("salesorderheader")}
+    ${ref("sales_order_header")}

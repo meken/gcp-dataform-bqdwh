@@ -1,23 +1,24 @@
 config {
     type: "table",
+    schema: "dwh",
     tags: ["fact"]
 }
 
 SELECT
-  ${keys.surrogate("sod.SalesOrderID", "sod.SalesOrderDetailID")} AS sales_key,
-  ${keys.surrogate("ProductID")} AS product_key,
-  ${keys.surrogate("CustomerID")} AS customer_key,
-  ${keys.surrogate("CreditCardID")} AS creditcard_key,
-  ${keys.surrogate("ShipToAddressID")} AS ship_address_key,
-  ${keys.surrogate("Status")} AS order_status_key,
-  ${keys.surrogate("OrderDate")} AS order_date_key,
-  sod.salesorderid,
-  sod.salesorderdetailid,
-  sod.unitprice,
-  sod.orderqty,
-  orderqty * unitprice AS revenue
+  ${keys.surrogate("sod.sales_order_id", "sod.sales_order_detail_id")} AS sales_key,
+  ${keys.surrogate("product_id")} AS product_key,
+  ${keys.surrogate("customer_id")} AS customer_key,
+  ${keys.surrogate("credit_card_id")} AS credit_card_key,
+  ${keys.surrogate("ship_to_address_id")} AS ship_address_key,
+  ${keys.surrogate("status")} AS order_status_key,
+  ${keys.surrogate("order_date")} AS order_date_key,
+  sod.sales_order_id,
+  sod.sales_order_detail_id,
+  sod.unit_price,
+  sod.order_qty,
+  order_qty * unit_price AS revenue
 FROM
-  ${ref("stg_salesorderdetail")} sod,
-  ${ref("stg_salesorderheader")} soh
+  ${ref("stg_sales_order_detail")} sod,
+  ${ref("stg_sales_order_header")} soh
 WHERE
-  sod.salesorderid = soh.salesorderid
+  sod.sales_order_id = soh.sales_order_id

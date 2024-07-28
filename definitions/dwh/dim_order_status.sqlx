@@ -1,10 +1,11 @@
 config {
     type: "table",
+    schema: "dwh",
     tags: ["dimension"]
 }
 
 SELECT
-    ${keys.surrogate("Status")} AS order_status_key,
+    ${keys.surrogate("status")} AS order_status_key,
     Status AS order_status,
     case
         when Status = 1 then 'in_process'
@@ -15,4 +16,4 @@ SELECT
         when Status = 6 then 'cancelled'
         else 'no_status'
     end as order_status_name
-FROM ${ref("stg_orderstatus")}
+FROM ${ref("stg_order_status")}

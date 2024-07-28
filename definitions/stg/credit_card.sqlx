@@ -1,11 +1,10 @@
 config {
   type: "table",
   schema: "curated",
-  name: "stg_product",
+  name: "stg_credit_card",
   tags: ["staging"]
 }
-
 SELECT 
-  DISTINCT *
-FROM 
-    ${ref("product")}
+    DISTINCT *
+FROM
+    ${ref("credit_card")}

@@ -1,5 +1,6 @@
 config {
     type: "table",
+    schema: "dwh",
     tags: ["dimension"]
 }
 SELECT
