@@ -25,9 +25,6 @@ select
     ${ref("stg_person")}.occupation,
     ${ref("stg_person")}.home_owner_flag,
     ${ref("stg_person")}.number_cars_owned,
-    ${ref("stg_person")}.commute_distance, 
-    ${ref("stg_store")}.business_entity_id as store_business_entity_id,
-    ${ref("stg_store")}.name as store_name
+    ${ref("stg_person")}.commute_distance
 from ${ref("stg_customer")}
 left join ${ref("stg_person")} on ${ref("stg_customer")}.person_id = ${ref("stg_person")}.business_entity_id
-left join ${ref("stg_store")} on ${ref("stg_customer")}.store_id = ${ref("stg_store")}.business_entity_id
