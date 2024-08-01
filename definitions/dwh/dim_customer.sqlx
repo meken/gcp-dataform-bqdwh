@@ -13,6 +13,19 @@ select
         COALESCE(${ref("stg_person")}.middle_name,""), " ",
         COALESCE(${ref("stg_person")}.last_name,"")
     ) as full_name,
+    ${ref("stg_person")}.total_purchase_ytd,
+    ${ref("stg_person")}.date_first_purchase,
+    ${ref("stg_person")}.birth_date,
+    ${ref("stg_person")}.marital_status,
+    ${ref("stg_person")}.yearly_income,
+    ${ref("stg_person")}.gender,
+    ${ref("stg_person")}.total_children,
+    ${ref("stg_person")}.number_children_at_home,
+    ${ref("stg_person")}.education,
+    ${ref("stg_person")}.occupation,
+    ${ref("stg_person")}.home_owner_flag,
+    ${ref("stg_person")}.number_cars_owned,
+    ${ref("stg_person")}.commute_distance, 
     ${ref("stg_store")}.business_entity_id as store_business_entity_id,
     ${ref("stg_store")}.name as store_name
 from ${ref("stg_customer")}
