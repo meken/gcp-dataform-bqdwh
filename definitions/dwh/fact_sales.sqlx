@@ -16,14 +16,14 @@ SELECT
   sod.sales_order_detail_id,
   sod.unit_price,
   sod.unit_price_discount,
-  p.standard_cost as cost_of_goods_sold,
-  sod.order_qty as order_quantity,
+  p.standard_cost AS cost_of_goods_sold,
+  sod.order_qty AS order_quantity,
   sod.order_qty * sod.unit_price AS gross_revenue,
-  (sod.order_qty * sod.unit_price * (1 - sod.unit_price_discount)) - (p.standard_cost) as gross_profit
-
+  (sod.order_qty * sod.unit_price * (1 - sod.unit_price_discount)) - (p.standard_cost) AS gross_profit
 FROM
   ${ref("stg_sales_order_detail")} sod,
   ${ref("stg_sales_order_header")} soh,
   ${ref("stg_product")} p
 WHERE
-  sod.sales_order_id = soh.sales_order_id AND sod.product_id = p.product_id
+  sod.sales_order_id = soh.sales_order_id
+  AND sod.product_id = p.product_id

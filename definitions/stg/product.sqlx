@@ -6,6 +6,6 @@ config {
 }
 
 SELECT 
-  DISTINCT *
+  DISTINCT * EXCEPT(discontinued_date)
 FROM 
     ${ref("product")}

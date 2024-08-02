@@ -4,8 +4,9 @@ config {
     tags: ["dimension"]
 }
 
-select
-    ${keys.surrogate("credit_card_id")} as credit_card_key,
-    credit_card_id,
-    card_type
-from ${ref("stg_credit_card")}
+SELECT
+  ${keys.surrogate("credit_card_id")} AS credit_card_key,
+  credit_card_id,
+  card_type
+FROM
+  ${ref("stg_credit_card")}

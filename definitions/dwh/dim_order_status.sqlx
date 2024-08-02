@@ -5,15 +5,16 @@ config {
 }
 
 SELECT
-    ${keys.surrogate("status")} AS order_status_key,
-    status AS order_status,
-    case
-        when status = 1 then 'in_process'
-        when status = 2 then 'approved'
-        when status = 3 then 'backordered'
-        when status = 4 then 'rejected'
-        when status = 5 then 'shipped'
-        when status = 6 then 'cancelled'
-        else 'no_status'
-    end as order_status_name
-FROM ${ref("stg_order_status")}
+  ${keys.surrogate("status")} AS order_status_key,
+  status AS order_status,
+  CASE
+    WHEN status = 1 THEN 'in_process'
+    WHEN status = 2 THEN 'approved'
+    WHEN status = 3 THEN 'backordered'
+    WHEN status = 4 THEN 'rejected'
+    WHEN status = 5 THEN 'shipped'
+    WHEN status = 6 THEN 'cancelled'
+    ELSE 'no_status'
+  END AS order_status_name
+FROM
+  ${ref("stg_order_status")}

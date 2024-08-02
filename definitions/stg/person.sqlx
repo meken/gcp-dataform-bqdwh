@@ -5,7 +5,7 @@ config {
   tags: ["staging"]
 }
 SELECT 
-    DISTINCT *
+    DISTINCT * EXCEPT(hobby, comments)
 FROM
     ${ref("person")}
 

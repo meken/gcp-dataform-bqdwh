@@ -4,12 +4,19 @@ config {
     tags: ["dimension"]
 }
 
-select
-    ${keys.surrogate("address_id")} as address_key,
-    ${ref("stg_address")}.address_id,
-    ${ref("stg_address")}.city as city,
-    ${ref("stg_state_province")}.name as state,
-    ${ref("stg_country_region")}.name as country
-from ${ref("stg_address")}
-left join ${ref("stg_state_province")} on ${ref("stg_address")}.state_province_id = ${ref("stg_state_province")}.state_province_id
-left join ${ref("stg_country_region")} on ${ref("stg_state_province")}.country_region_code = ${ref("stg_country_region")}.country_region_code
+SELECT
+  ${keys.surrogate("address_id")} AS address_key,
+  ${ref("stg_address")}.address_id,
+  ${ref("stg_address")}.city AS city,
+  ${ref("stg_state_province")}.name AS state,
+  ${ref("stg_country_region")}.name AS country
+FROM
+  ${ref("stg_address")}
+LEFT JOIN
+  ${ref("stg_state_province")}
+ON
+  ${ref("stg_address")}.state_province_id = ${ref("stg_state_province")}.state_province_id
+LEFT JOIN
+  ${ref("stg_country_region")}
+ON
+  ${ref("stg_state_province")}.country_region_code = ${ref("stg_country_region")}.country_region_code
