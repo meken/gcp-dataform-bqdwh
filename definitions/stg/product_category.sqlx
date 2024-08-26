@@ -1,10 +1,10 @@
 config {
   type: "table",
   schema: "curated",
-  name: "stg_customer",
+  name: "stg_product_category",
   tags: ["staging"]
 }
-SELECT 
+SELECT
     DISTINCT *
 FROM
-    ${ref("customer")}
+    ${ref("product_category")}

@@ -1,14 +1,22 @@
 config {
     type: "table",
+    schema: "dwh",
     tags: ["dimension"]
 }
 
-select
-    ${keys.surrogate("AddressID")} as address_key,
-    ${ref("stg_address")}.AddressID,
-    ${ref("stg_address")}.City as city,
-    ${ref("stg_stateprovince")}.Name as state,
-    ${ref("stg_countryregion")}.Name as country
-from ${ref("stg_address")}
-left join ${ref("stg_stateprovince")} on ${ref("stg_address")}.stateprovinceid = ${ref("stg_stateprovince")}.stateprovinceid
-left join ${ref("stg_countryregion")} on ${ref("stg_stateprovince")}.countryregioncode = ${ref("stg_countryregion")}.countryregioncode
+SELECT
+  ${keys.surrogate("address_id")} AS address_key,
+  ${ref("stg_address")}.address_id,
+  ${ref("stg_address")}.city AS city,
+  ${ref("stg_state_province")}.name AS state,
+  ${ref("stg_country_region")}.name AS country
+FROM
+  ${ref("stg_address")}
+LEFT JOIN
+  ${ref("stg_state_province")}
+ON
+  ${ref("stg_address")}.state_province_id = ${ref("stg_state_province")}.state_province_id
+LEFT JOIN
+  ${ref("stg_country_region")}
+ON
+  ${ref("stg_state_province")}.country_region_code = ${ref("stg_country_region")}.country_region_code

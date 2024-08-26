@@ -1,4 +1,4 @@
-defaultProject: meken-playground
+defaultProject: awdwh
 defaultLocation: us-central1
 defaultDataset: awdwh
 defaultAssertionDataset: dataform_assertions

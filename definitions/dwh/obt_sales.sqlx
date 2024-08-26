@@ -1,27 +1,44 @@
 config {
     type: "table",
+    schema: "dwh",
     tags: ["obt"]
 }
+
 SELECT
-  a.* EXCEPT(address_key),
-  d.* EXCEPT(date_key),
-  p.* EXCEPT(product_key),
-  cc.* EXCEPT(creditcard_key),
-  o.* EXCEPT(order_status_key),
-  c.* EXCEPT(customer_key),
-  f.* EXCEPT(sales_key, customer_key, order_date_key, order_status_key, creditcard_key, ship_address_key, product_key)
+  * EXCEPT(
+    address_key,
+    date_key,
+    product_key,
+    sales_key,
+    customer_key,
+    order_date_key,
+    order_status_key,
+    credit_card_key,
+    ship_address_key
+  )
 FROM
-  ${ref("fact_sales")} f,
-  ${ref("dim_address")} a,
-  ${ref("dim_date")} d,
-  ${ref("dim_product")} p,
-  ${ref("dim_creditcard")} cc,
-  ${ref("dim_orderstatus")} o,
-  ${ref("dim_customer")} c
-WHERE
-  f.product_key = p.product_key
-  AND f.customer_key = c.customer_key
-  AND f.creditcard_key = cc.creditcard_key
-  AND f.order_status_key = o.order_status_key
-  AND f.ship_address_key = a.address_key
-  AND f.order_date_key = d.date_key
+  ${ref("fact_sales")}
+LEFT JOIN
+  ${ref("dim_product")}
+ON
+  ${ref("fact_sales")}.product_key = ${ref("dim_product")}.product_key
+LEFT JOIN
+  ${ref("dim_customer")}
+ON
+  ${ref("fact_sales")}.customer_key = ${ref("dim_customer")}.customer_key
+LEFT JOIN
+  ${ref("dim_credit_card")}
+ON
+  ${ref("fact_sales")}.credit_card_key = ${ref("dim_credit_card")}.credit_card_key
+LEFT JOIN
+  ${ref("dim_order_status")}
+ON
+  ${ref("fact_sales")}.order_status_key = ${ref("dim_order_status")}.order_status_key
+LEFT JOIN
+  ${ref("dim_address")}
+ON
+  ${ref("fact_sales")}.ship_address_key = ${ref("dim_address")}.address_key
+LEFT JOIN
+  ${ref("dim_date")}
+ON
+  ${ref("fact_sales")}.order_date_key = ${ref("dim_date")}.date_key

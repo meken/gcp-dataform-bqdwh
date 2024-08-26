@@ -1,11 +1,11 @@
 config {
   type: "table",
   schema: "curated",
-  name: "stg_person"
+  name: "stg_person",
+  tags: ["staging"]
 }
 SELECT 
-    BusinessEntityID,
-    CONCAT(COALESCE(FirstName, ""), " ", COALESCE(MiddleName, ""), " ", COALESCE(LastName, "")) AS FullName
+    DISTINCT * EXCEPT(hobby, comments)
 FROM
     ${ref("person")}
 

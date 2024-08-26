@@ -1,5 +1,6 @@
 config {
     type: "table",
+    schema: "dwh",
     tags: ["dimension"]
 }
 SELECT
@@ -8,16 +9,17 @@ SELECT
   EXTRACT(YEAR FROM d) AS year,
   EXTRACT(MONTH FROM d) AS month,
   EXTRACT(DAY FROM d) AS day,
-  EXTRACT(WEEK FROM d) AS year_week,
-  EXTRACT(DAYOFYEAR FROM d) AS year_day,
-  LAST_DAY(d) AS last_day,
-  FORMAT_DATE('%Q', d) as fiscal_qtr,
-  FORMAT_DATE('%B', d) as month_name,
-  FORMAT_DATE('%w', d) AS week_day,
+  EXTRACT(WEEK FROM d) AS week_of_year,
+  EXTRACT(DAYOFYEAR FROM d) AS day_of_year,
+  EXTRACT(QUARTER FROM d) AS quarter_of_year,
+  EXTRACT(DAYOFWEEK FROM d) AS day_of_week,
+  FORMAT_DATE('%B', d) AS month_name,
   FORMAT_DATE('%A', d) AS day_name,
-  (CASE WHEN FORMAT_DATE('%A', d) IN ('Sunday', 'Saturday') THEN 0 ELSE 1 END) AS day_is_weekday,
+  (LAST_DAY(d) = d) AS is_last_day_of_month,
+  (EXTRACT(DAYOFWEEK FROM d) IN (1, 7)) is_weekend
 FROM (
   SELECT
     *
   FROM
-    UNNEST(GENERATE_DATE_ARRAY('2001-01-01', '2030-01-01', INTERVAL 1 DAY)) AS d )
+    UNNEST(GENERATE_DATE_ARRAY('2001-01-01', '2030-01-01', INTERVAL 1 DAY)) AS d 
+)

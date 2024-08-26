@@ -1,0 +1,12 @@
+config {
+    type: "table",
+    schema: "dwh",
+    tags: ["dimension"]
+}
+
+SELECT
+  ${keys.surrogate("credit_card_id")} AS credit_card_key,
+  credit_card_id,
+  card_type
+FROM
+  ${ref("stg_credit_card")}

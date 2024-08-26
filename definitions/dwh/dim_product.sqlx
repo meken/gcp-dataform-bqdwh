@@ -1,16 +1,25 @@
 config {
     type: "table",
+    schema: "dwh",
     tags: ["dimension"]
 }
-select
-    ${keys.surrogate("ProductID")}  as product_key,
-    ${ref("stg_product")}.ProductID,
-    ${ref("stg_product")}.Name as product_name,
-    ${ref("stg_product")}.ProductNumber as product_number,
-    ${ref("stg_product")}.Color,
-    ${ref("stg_product")}.Class,
-    ${ref("stg_productsubcategory")}.Name as product_subcategory_name,
-    ${ref("stg_productcategory")}.Name as product_category_name
-from ${ref("stg_product")}
-left join ${ref("stg_productsubcategory")} on ${ref("stg_product")}.productsubcategoryid = ${ref("stg_productsubcategory")}.productsubcategoryid
-left join ${ref("stg_productcategory")} on ${ref("stg_productsubcategory")}.productcategoryid = ${ref("stg_productcategory")}.productcategoryid
+
+SELECT
+  ${keys.surrogate("product_id")} AS product_key,
+  ${ref("stg_product")}.product_id,
+  ${ref("stg_product")}.name AS product_name,
+  ${ref("stg_product")}.product_number,
+  ${ref("stg_product")}.color,
+  ${ref("stg_product")}.class,
+  ${ref("stg_product_subcategory")}.name AS product_subcategory_name,
+  ${ref("stg_product_category")}.name AS product_category_name
+FROM
+  ${ref("stg_product")}
+LEFT JOIN
+  ${ref("stg_product_subcategory")}
+ON
+  ${ref("stg_product")}.product_subcategory_id = ${ref("stg_product_subcategory")}.product_subcategory_id
+LEFT JOIN
+  ${ref("stg_product_category")}
+ON
+  ${ref("stg_product_subcategory")}.product_category_id = ${ref("stg_product_category")}.product_category_id

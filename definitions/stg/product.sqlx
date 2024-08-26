@@ -1,32 +1,11 @@
 config {
   type: "table",
   schema: "curated",
-  name: "stg_product"
+  name: "stg_product",
+  tags: ["staging"]
 }
 
 SELECT 
-    ProductID,
-    Name,
-    ProductNumber,
-    MakeFlag,
-    FinishedGoodsFlag,
-    Color,
-    SafetyStockLevel,
-    ReorderPoint,
-    StandardCost,
-    ListPrice,
-    Size,
-    SizeUnitMeasureCode,
-    WeightUnitMeasureCode,
-    Weight,
-    DaysToManufacture,
-    ProductLine,
-    Class,
-    Style,
-    ProductSubcategoryID,
-    ProductModelID,
-    SellStartDate,
-    SellEndDate,
-    DiscontinuedDate
+  DISTINCT * EXCEPT(discontinued_date)
 FROM 
     ${ref("product")}

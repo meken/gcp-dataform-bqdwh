@@ -1,15 +1,34 @@
 config {
     type: "table",
+    schema: "dwh",
     tags: ["dimension"]
 }
 
-select
-    ${keys.surrogate("CustomerID")} as customer_key,
-    ${ref("stg_customer")}.CustomerID,
-    ${ref("stg_person")}.BusinessEntityID as person_business_entity_id,
-    ${ref("stg_person")}.FullName as full_name,
-    ${ref("stg_store")}.BusinessEntityID as store_business_entity_id,
-    ${ref("stg_store")}.Name as store_name
-from ${ref("stg_customer")}
-left join ${ref("stg_person")} on ${ref("stg_customer")}.personid = ${ref("stg_person")}.businessentityid
-left join ${ref("stg_store")} on ${ref("stg_customer")}.storeid = ${ref("stg_store")}.businessentityid
+SELECT
+  ${keys.surrogate("customer_id")} AS customer_key,
+  ${ref("stg_customer")}.customer_id,
+  ${ref("stg_person")}.business_entity_id AS person_business_entity_id,
+  CONCAT( 
+    COALESCE(${ref("stg_person")}.first_name,""), " ", 
+    COALESCE(${ref("stg_person")}.middle_name,""), " ", 
+    COALESCE(${ref("stg_person")}.last_name,"") 
+  ) AS full_name,
+  ${ref("stg_person")}.total_purchase_ytd,
+  ${ref("stg_person")}.date_first_purchase,
+  ${ref("stg_person")}.birth_date,
+  ${ref("stg_person")}.marital_status,
+  ${ref("stg_person")}.yearly_income,
+  ${ref("stg_person")}.gender,
+  ${ref("stg_person")}.total_children,
+  ${ref("stg_person")}.number_children_at_home,
+  ${ref("stg_person")}.education,
+  ${ref("stg_person")}.occupation,
+  ${ref("stg_person")}.home_owner_flag,
+  ${ref("stg_person")}.number_cars_owned,
+  ${ref("stg_person")}.commute_distance
+FROM
+  ${ref("stg_customer")}
+LEFT JOIN
+  ${ref("stg_person")}
+ON
+  ${ref("stg_customer")}.person_id = ${ref("stg_person")}.business_entity_id
