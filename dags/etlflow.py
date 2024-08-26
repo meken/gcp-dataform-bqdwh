@@ -2,25 +2,38 @@ import os
 
 from datetime import datetime
 
-from google.cloud.dataform_v1beta1 import WorkflowInvocation
-
 from airflow import models
-from airflow.models.baseoperator import chain
 from airflow.operators.empty import EmptyOperator
+from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator
 from airflow.providers.google.cloud.operators.dataform import (
-    DataformCancelWorkflowInvocationOperator,
     DataformCreateCompilationResultOperator,
     DataformCreateWorkflowInvocationOperator,
-    DataformGetCompilationResultOperator,
-    DataformGetWorkflowInvocationOperator,
 )
-from airflow.providers.google.cloud.sensors.dataform import DataformWorkflowInvocationStateSensor
+
 
 DAG_ID = "etl-flow"
+
 PROJECT_ID = os.getenv("GCP_PROJECT_ID")
 REGION = os.getenv("GCP_REGION")
+
 REPOSITORY_ID = os.getenv("REPOSITORY_ID")
 GIT_REF = os.getenv("GIT_REF")
+
+INFERENCE_QUERY = """
+CREATE OR REPLACE TABLE dwh.churn_predictions AS 
+SELECT
+  business_entity_id as customer_id,
+  predicted_churned,
+  predicted_churned_probs
+FROM
+ML.PREDICT (
+  MODEL `dwh.churn_model`,
+  (
+    SELECT * FROM curated.stg_person
+  )
+)
+"""
+
 
 with models.DAG(
     DAG_ID,
@@ -53,6 +66,16 @@ with models.DAG(
         },
     )
 
-    bq_inference_op = EmptyOperator(task_id="customer_churn_inferencing")
+    bq_inference_op = BigQueryInsertJobOperator(
+        task_id="customer_churn_inferencing",
+        location=REGION,
+        configuration={
+            "query": {
+                "query": INFERENCE_QUERY,
+                "useLegacySql": False,
+                "priority": "BATCH",
+            }
+        },
+    )
 
 prep_landing_bucket_op >> df_compilation_op >> df_invocation_op >> bq_inference_op
