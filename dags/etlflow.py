@@ -18,8 +18,8 @@ from airflow.providers.google.cloud.sensors.dataform import DataformWorkflowInvo
 
 DAG_ID = "etl-flow"
 PROJECT_ID = os.getenv("GCP_PROJECT_ID")
-REPOSITORY_ID = os.getenv("REPOSITORY_ID")
 REGION = os.getenv("GCP_REGION")
+REPOSITORY_ID = os.getenv("REPOSITORY_ID")
 GIT_REF = os.getenv("GIT_REF")
 
 with models.DAG(
@@ -39,6 +39,7 @@ with models.DAG(
         repository_id=REPOSITORY_ID,
         compilation_result={
             "git_commitish": GIT_REF,
+            "code_compilation_config": { "default_database": PROJECT_ID}
         },
     )
 
@@ -47,7 +48,7 @@ with models.DAG(
         project_id=PROJECT_ID,
         region=REGION,
         repository_id=REPOSITORY_ID,
-         workflow_invocation={
+        workflow_invocation={
             "compilation_result": "{{ task_instance.xcom_pull('compile_dataform_workflow')['name'] }}"
         },
     )
