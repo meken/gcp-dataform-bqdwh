@@ -16,8 +16,8 @@ DAG_ID = "etl-flow"
 PROJECT_ID = os.getenv("GCP_PROJECT_ID")
 REGION = os.getenv("GCP_REGION")
 
-REPOSITORY_ID = os.getenv("REPOSITORY_ID")
-GIT_REF = os.getenv("GIT_REF")
+REPOSITORY_ID = os.getenv("DATAFORM_REPOSITORY_ID")
+GIT_REF = os.getenv("DATAFORM_GIT_REF")
 
 INFERENCE_QUERY = """
 CREATE OR REPLACE TABLE dwh.churn_predictions AS 
@@ -37,7 +37,7 @@ ML.PREDICT (
 
 with models.DAG(
     DAG_ID,
-    schedule_interval='@once', 
+    schedule_interval='@daily', 
     start_date=datetime(2024, 1, 1),
     catchup=False,
     tags=['dataform'],
