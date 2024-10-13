@@ -23,3 +23,7 @@ LEFT JOIN
   ${ref("stg_product_category")}
 ON
   ${ref("stg_product_subcategory")}.product_category_id = ${ref("stg_product_category")}.product_category_id
+
+post_operations {
+  ${keys.primary(ctx, "product_key")}
+}
