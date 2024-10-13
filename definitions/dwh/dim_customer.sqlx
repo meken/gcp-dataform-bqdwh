@@ -32,3 +32,7 @@ LEFT JOIN
   ${ref("stg_person")}
 ON
   ${ref("stg_customer")}.person_id = ${ref("stg_person")}.business_entity_id
+
+post_operations {
+  ${keys.primary(ctx, "customer_key")}
+}

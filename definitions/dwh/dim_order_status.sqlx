@@ -18,3 +18,7 @@ SELECT
   END AS order_status_name
 FROM
   ${ref("stg_order_status")}
+
+post_operations {
+  ${keys.primary(ctx, "order_status_key")}
+}

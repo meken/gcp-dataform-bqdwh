@@ -1,7 +1,10 @@
 config {
     type: "table",
     schema: "dwh",
-    tags: ["obt"]
+    tags: ["obt"],
+    bigquery: {
+      partitionBy: "order_date"
+    }
 }
 
 SELECT
