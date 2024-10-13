@@ -20,3 +20,7 @@ LEFT JOIN
   ${ref("stg_country_region")}
 ON
   ${ref("stg_state_province")}.country_region_code = ${ref("stg_country_region")}.country_region_code
+
+post_operations {
+  ${keys.primary(ctx, "address_key")}
+}

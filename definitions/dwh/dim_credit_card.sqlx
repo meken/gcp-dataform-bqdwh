@@ -10,3 +10,7 @@ SELECT
   card_type
 FROM
   ${ref("stg_credit_card")}
+
+post_operations {
+  ${keys.primary(ctx, "credit_card_key")}
+}
