@@ -22,7 +22,7 @@ SELECT
   p.standard_cost AS cost_of_goods_sold,
   sod.order_qty AS order_quantity,
   sod.order_qty * sod.unit_price AS gross_revenue,
-  (sod.order_qty * sod.unit_price * (1 - sod.unit_price_discount)) - (p.standard_cost) AS gross_profit
+  sod.order_qty * (sod.unit_price * (1 - sod.unit_price_discount) - p.standard_cost) AS gross_profit
 FROM
   ${ref("stg_sales_order_detail")} sod,
   ${ref("stg_sales_order_header")} soh,
